@@ -1,0 +1,366 @@
+header img{
+    margin-top: 0.2rem;
+}
+
+legend {
+    margin-bottom: 0.5rem;
+}
+
+.button {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.loading {
+    background-image: url(../svg/gears.svg);
+    background-repeat: no-repeat;
+    background-size: 5rem;
+    background-position: center;
+}
+
+select.loading {
+    background-size: 2rem;
+}
+
+.label {
+    border-radius: 10px !important;
+    margin-left: 0.5rem;
+}
+
+.button, .button:active, .button:focus,
+.menu-group.primary, .menu-group.primary .menu-bar, .title-bar.primary {
+   background-color: #262626;
+}
+
+.button:hover, .menu-group.primary .menu-bar > li > a:hover {
+    background-color: #a80c21;
+}
+
+.menu-group.primary .menu-bar.title-area > .name > a:hover {
+    background-color: #373737;
+}
+
+.block-list li > a, .block-list li > span, .block-list li > label{
+    padding-right: 2rem;
+}
+
+.switch input:checked + label {
+    background: #a80c20;
+}
+
+.switch input:checked + label::after {
+    border-color: #a80c20;
+}
+
+.global-nav .logo {
+    height: 1rem;
+}
+
+#view {
+    padding-top: 1.2rem;
+}
+
+.block-list .section-header {
+    text-transform: none;
+    -webkit-user-select: all;
+    -moz-user-select: all;
+    -ms-user-select: all;
+    user-select: all;
+}
+
+.block-list header span{
+    font-size: 0.7rem;
+}
+
+.block-list li.active{
+    background-color: #f4f4f4;
+}
+
+label.inline {
+    margin: 0 0 0.88889rem 0;
+    line-height: 2.35rem;
+}
+
+label.right {
+    float: none;
+    text-align: right;
+}
+
+#editor-block {
+    border-left: 1px #d9d9d9 solid;
+    margin-left: 1rem;
+}
+
+#editor-block h5{
+    margin: 0 0 0.2rem;
+}
+
+.ace_editor {
+    flex: 1 1 auto;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+}
+
+.ace_search,
+.ace_search.right {
+    border-radius: 5px !important;
+    right: 21px !important;
+    border: 1px solid #cbcbcb !important;
+    background-color: #fff;
+    top: 1px;
+}
+
+.document-list{
+    overflow-y: auto;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+.alertText{
+    color: chocolate;
+}
+
+.belowFormSeparator{
+    margin-top: 0;
+}
+
+.refreshButton{
+    background-image: url(../svg/refresh.svg);
+    background-repeat: no-repeat;
+    background-size: 1.2rem;
+    background-position: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    top: 0.45rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.25s ease-out
+}
+
+.refreshButton:hover{
+    background-color: #eee;
+    border: #bbb solid 1px;
+    border-radius: 50%;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.25s ease-out;
+}
+
+.search-block .close-button {
+    top: 0.35rem;
+    right: 6.5rem;
+    background: transparent;
+    border: 1px #bcbcbc solid;
+    border-radius: 1rem;
+    padding: 4px;
+    overflow: hidden;
+}
+.search-block .close-button:hover {
+    color: #555;
+    background-color: #eee;
+}
+
+/** Floating form labels **/
+
+.floating-label {
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    margin: 0 0 1rem 0;
+}
+
+.inline-label > .floating-label {
+    margin: 0;
+}
+
+.floating-label input,
+.floating-label input:hover,
+.floating-label input:focus,
+.floating-label input:active {
+    margin-bottom: 0;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    outline: 0;
+    padding-top: 0.75rem;
+    padding-bottom: 0.25rem;
+}
+
+.floating-label input + label,
+.floating-label textarea + label {
+    position: absolute;
+    top: 0;
+    transition: opacity 0.4s ease;
+    opacity: 0;
+    color: #999;
+    margin-bottom: 0;
+    padding-left: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.floating-label input:valid + label,
+.floating-label input[disabled] + label,
+.floating-label textarea:valid + label {
+    opacity: 1;
+}
+
+.floating-label input:focus + label,
+.floating-label textarea:focus + label {
+    color: #2c8efe;
+}
+
+/** Nav Panel **/
+
+#nav-panel,
+#nav-panel .menu-bar {
+    background: #F1F1F1;
+    color: #818181;
+}
+
+#nav-panel .menu-bar > li:not(.title) > a {
+    color: #818181;
+}
+
+#nav-panel .menu-bar > li.title {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+}
+
+.menu-bar > li > a > img {
+    margin: 0 1rem 0 0;
+}
+
+#nav-panel .menu-bar > li.title > a {
+    color: #a80c20;
+}
+
+#nav-panel .menu-bar .is-active > a {
+    color: #555;
+    font-weight: bold;
+    background: #E3E3E3;
+}
+
+#nav-panel .menu-bar .is-active > a {
+    font-weight: normal;
+}
+
+.success i {
+    color: #43AC6A;
+}
+
+.alert i {
+    color: #F04124;
+}
+
+/* Tooltips */
+
+.has-tip {
+    border-bottom: dotted 1px #CCCCCC;
+    color: #333333;
+    cursor: help;
+    font-weight: bold;
+}
+
+.has-tip:hover,
+.has-tip:focus {
+    border-bottom: dotted 1px #003f54;
+    color: #008CBA;
+}
+
+.has-tip.tip-left,
+.has-tip.tip-right {
+    float: none !important;
+}
+
+.tooltip {
+    background: #333333;
+    color: #FFFFFF;
+    display: none;
+    font-size: 0.875rem;
+    font-weight: normal;
+    line-height: 1.3;
+    max-width: 300px;
+    padding: 0.75rem;
+    position: absolute;
+    width: 100%;
+    z-index: 1006;
+    left: 50%;
+}
+
+.tooltip > .nub {
+    border: solid 5px;
+    border-color: transparent transparent #333333 transparent;
+    display: block;
+    height: 0;
+    pointer-events: none;
+    position: absolute;
+    top: -10px;
+    width: 0;
+    left: 5px;
+}
+
+.tooltip > .nub.rtl {
+    left: auto;
+    right: 5px;
+}
+
+.tooltip.radius {
+    border-radius: 3px;
+}
+
+.tooltip.round {
+    border-radius: 1000px;
+}
+
+.tooltip.round > .nub {
+    left: 2rem;
+}
+
+.tooltip.opened {
+    border-bottom: dotted 1px #003f54 !important;
+    color: #008CBA !important;
+}
+
+.tap-to-close {
+    color: #777777;
+    display: block;
+    font-size: 0.625rem;
+    font-weight: normal;
+}
+
+@media only screen {
+    .tooltip > .nub {
+        border-color: transparent transparent #333333 transparent;
+        top: -10px;
+    }
+    .tooltip.tip-top > .nub {
+        border-color: #333333 transparent transparent transparent;
+        bottom: -10px;
+        top: auto;
+    }
+    .tooltip.tip-left,
+    .tooltip.tip-right {
+        float: none !important;
+    }
+    .tooltip.tip-left > .nub {
+        border-color: transparent transparent transparent #333333;
+        left: auto;
+        margin-top: -5px;
+        right: -10px;
+        top: 50%;
+    }
+    .tooltip.tip-right > .nub {
+        border-color: transparent #333333 transparent transparent;
+        left: -10px;
+        margin-top: -5px;
+        right: auto;
+        top: 50%;
+    }
+}

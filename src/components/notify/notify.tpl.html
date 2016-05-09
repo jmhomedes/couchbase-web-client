@@ -1,0 +1,6 @@
+<div id="alerts-container">
+    <div ng-repeat="alert in notify.alerts" class="alertbox" ng-class="::(alert.type || '')" ng-style="::notify.getTop($index)">
+        <span ng-bind-html="::alert.msg"></span>
+        <a ng-show="::alert.closeable" class="close" ng-click="::close()">&times;</a>
+    </div>
+</div>

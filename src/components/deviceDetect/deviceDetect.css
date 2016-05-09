@@ -1,0 +1,36 @@
+.display-mode {
+    height: 0;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+}
+.display-mode span {
+    display: inline-block;
+    height: 1px;
+    width: 1px;
+}
+/* MOBILE */
+@media only screen and (max-width: 40em) {
+    .display-mode .tablet, .display-mode .desktop {
+        display: none;
+    }
+}
+/* TABLET */
+@media only screen and (min-width: 40.001em) and (max-width: 75em) {
+    .display-mode .mobile, .display-mode .desktop {
+        display: none;
+    }
+}
+/* TABLET-LANDSCAPE - doesnt works well
+@media only screen and (min-width: 40.001em) and (max-width: 75em) and (orientation: landscape){
+    .display-mode .mobile, .display-mode .tablet, .display-mode .desktop {
+        display: none;
+    }
+}
+*/
+/* DESKTOP */
+@media (min-width: 75em) {
+    .display-mode .mobile, .display-mode .tablet{
+        display: none;
+    }
+}

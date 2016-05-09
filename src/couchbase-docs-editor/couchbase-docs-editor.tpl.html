@@ -1,0 +1,269 @@
+<div class="vertical grid-block">
+    <!-- bucket interaction block -->
+    <div class="grid-block shrink">
+        <div class="grid-content shrink">
+            <label for="bucketSelector" class="right inline">{{'selectBucket' | translate}}:</label>
+        </div>
+        <div class="grid-content shrink">
+            <select name="bucketSelector" id="bucketSelector"
+              ng-model="cbDocsEditor.docsTabs[cbDocsEditor.activeTab].bucket"
+              ng-options="bucket.name for bucket in cbDocsEditor.bucketList"
+              ng-change="::cbDocsEditor.getDocuments(cbDocsEditor.docsTabs[cbDocsEditor.activeTab].bucket, 1, cbDocsEditor.activeTab)"
+              ng-class="{loading: !cbDocsEditor.bucketList.length}">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="grid-block" ng-show="cbDocsEditor.docsTabs[cbDocsEditor.activeTab] && cbDocsEditor.docsTabs[cbDocsEditor.activeTab].bucket">
+            <div class="grid-content shrink">
+                <a class="button expand" zf-open="newDocModal">{{'createNewDocument' | translate}}</a>
+            </div>
+            <div class="grid-content search-block">
+                <div class="inline-label" tooltip-placement="bottom" tooltip="{{'searchDocsHelp' | translate}}" tooltip-append-to-body="true">
+                    <div class="floating-label">
+                        <button ng-show="cbDocsEditor.docsTabs[cbDocsEditor.activeTab].searchActive" class="close-button"
+                            aria-label="Close alert" type="button" ng-click="cbDocsEditor.cleanSearchDocuments(cbDocsEditor.docsTabs[cbDocsEditor.activeTab].bucket, cbDocsEditor.docsTabs[cbDocsEditor.activeTab].pageNumber, cbDocsEditor.activeTab)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <input type="text" ng-model="cbDocsEditor.docsTabs[cbDocsEditor.activeTab].docNameSearch"
+                            placeholder="{{'searchDocByName' | translate}}" name="docNameSearch" required
+                            ng-keydown="$event.which === 13 && cbDocsEditor.searchDocuments(cbDocsEditor.docsTabs[cbDocsEditor.activeTab].bucket,
+                            cbDocsEditor.docsTabs[cbDocsEditor.activeTab].docNameSearch, cbDocsEditor.activeTab)"/>
+                        <label for="docNameSearch">{{'searchDocByName' | translate}}</label>
+                    </div>
+                    <a href="#" class="button" ng-click="cbDocsEditor.searchDocuments(cbDocsEditor.docsTabs[cbDocsEditor.activeTab].bucket,
+                    cbDocsEditor.docsTabs[cbDocsEditor.activeTab].docNameSearch, cbDocsEditor.activeTab)">{{'search' | translate}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- TABS -->
+    <div class="chrome-tabs vertical grid-block shrink" ng-show="cbDocsEditor.docsTabs.length > 1 || cbDocsEditor.docsTabs[0].bucket">
+        <div class="tabs">
+            <div ng-repeat="docsTab in cbDocsEditor.docsTabs" class="tab"
+              ng-class="{active: $index === cbDocsEditor.activeTab}"
+              ng-click="cbDocsEditor.changeTab($index)"
+              ng-style="{'zIndex': $index === cbDocsEditor.activeTab ? 20 : cbDocsEditor.docsTabs.length-$index}">
+                <div class="tab-title">
+                    {{::docsTab.bucket.name}}
+                </div>
+                <a class="close-icon" title="{{'closeTab' | translate}}" ng-click="::cbDocsEditor.closeTab($index)"></a>
+                <div class="tab-box"></div>
+            </div>
+            <a class="new-tab" title="{{'newTab' | translate}}" ng-click="::cbDocsEditor.addTab()">
+                <span>+</span>
+            </a>
+        </div>
+        <hr class="belowFormSeparator"/>
+    </div>
+    <!-- TAB CONTENT -->
+    <div ng-repeat="docsTab in cbDocsEditor.docsTabs" class="grid-block"
+      ng-show="$index === cbDocsEditor.activeTab && cbDocsEditor.docsTabs[$index].bucket">
+        <!-- documents block -->
+        <div class="grid-block">
+            <!-- documents list block -->
+            <div class="small-12 medium-4 vertical grid-block">
+                <!-- documents filter: -->
+                <div class="grid-block shrink">
+                    <div class="grid-block">
+                        <div class="grid-content">
+                            <div class="floating-label">
+                                <input type="text" name="docNameFilter" ng-model="docsTab.docNameFilter"
+                                    placeholder="{{'filterDocByName' | translate}}" required/>
+                                <label for="docNameFilter">{{'filterDocByName' | translate}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-block shrink">
+                        <div class="grid-content">
+                            <select ng-model="cbDocsEditor.documentsPerPage" ng-options="numDocs for numDocs in cbDocsEditor.numDocsArray"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-block shrink">
+                    <div class="grid-content shrink">
+                        <section class="block-list">
+                            <header>
+                                {{'documents' | translate}} ({{docsTab.bucket && docsTab.bucket.itemCount}})
+                                <span ng-show="docsTab.bucket.itemCount > cbDocsEditor.documentsPerPage &&
+                                  docsTab.documentListNames.length">
+                                    {{'showingFromTo' | translate :
+                                        {
+                                            0: (cbDocsEditor.documentsPerPage*(docsTab.pageNumber-1))+1,
+                                            1: (cbDocsEditor.documentsPerPage*(docsTab.pageNumber-1))+docsTab.documentListNames.length
+                                        }
+                                    }}
+                                </span>
+                            </header>
+                        </section>
+                    </div>
+                    <a ng-click="::cbDocsEditor.getDocuments(docsTab.bucket, docsTab.pageNumber, $index, docsTab.docNameSearch)" title="{{'refreshList' | translate}}"
+                    class="refreshButton"></a>
+                </div>
+                <!-- documents list: -->
+                <div class="grid-block">
+                    <section class="block-list grid-content document-list" ng-class="{loading: docsTab.bucket.itemCount && docsTab.documentListNames.pending}">
+                        <ul>
+                            <li ng-repeat="documentName in docsTab.documentListNames | filter: docsTab.docNameFilter"
+                              class="with-chevron" ng-class="{active: docsTab.documentName === documentName}">
+                                <a title="{{ docsTab.documentName === documentName ? 'Refresh document' : '' }}"
+                                  ng-click="::cbDocsEditor.getDocument(docsTab.bucket.name, documentName, $parent.$index)">
+                                    <strong>{{::documentName}}</strong>
+                                </a>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+                <!-- PAGINATION BLOCK -->
+                <div class="grid-block shrink">
+                    <div class="grid-content">
+                        <!-- documents pagination: -->
+                        <pagination page="docsTab.pageNumber" total-items="docsTab.bucket.itemCount" items-per-page="::cbDocsEditor.documentsPerPage"
+                        rotate="false" max-size="20" boundary-links="true" class="pagination-sm clearfix" previous-text="&lsaquo;" next-text="&rsaquo;"
+                        on-select-page="::cbDocsEditor.getDocuments(docsTab.bucket, page, $index, docsTab.docNameSearch)" first-text="&laquo;" last-text="&raquo;" >
+                        </pagination>
+                    </div>
+                </div>
+            </div>
+            <!-- document editor block -->
+            <div id="editor-block" class="vertical grid-block" ng-show="docsTab.documentContent">
+                <!-- document controls -->
+                <div class="grid-block shrink text-center">
+                    <div class="grid-content">
+                        <a ng-click="::cbDocsEditor.saveDocument(docsTab.bucket.name, docsTab.documentName, docsTab.documentRev, docsTab.documentContent, $index)"
+                        class="success button expand">{{'save' | translate}}</a>
+                    </div>
+                    <div class="grid-content">
+                        <a class="button expand" zf-open="saveAsModal">{{'saveAs' | translate}}...</a>
+                    </div>
+                    <div class="grid-content">
+                        <a class="alert button expand" zf-open="deleteDocModal">{{'delete' | translate}}</a>
+                    </div>
+                </div>
+                <div class="grid-block shrink">
+                    <div class="grid-content">
+                        <section class="block-list">
+                            <header class="ob-section-header">{{docsTab.documentName}}</header>
+                        </section>
+                    </div>
+                </div>
+                <!-- CODE EDITOR -->
+                <div ui-ace="docsTab.editorOptions" ng-model="docsTab.documentContent"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODALS -->
+<div zf-modal="" id="newDocModal" class="collapse">
+    <a zf-close="" class="close-button">×</a>
+    <div class="grid-block vertical">
+        <div class="title-bar primary">
+            <div class="center title">{{'createDocument' | translate}}</div>
+        </div>
+        <div class="vertical grid-block" style="padding-top: 1rem;">
+            <div class="grid-content padding" ng-show="cbDocsEditor.errorExistingDocument">
+                <p class="alertText">
+                    {{'documentAlreadyExists' | translate}}
+                </p>
+            </div>
+            <div class="vertical grid-block">
+                <div class="grid-block">
+                    <div class="grid-content shrink">
+                        <label for="newDocName" class="right inline">{{'typeDocumentId' | translate}}:</label>
+                    </div>
+                    <div class="grid-content">
+                        <input type="text" name="newDocName" ng-model="cbDocsEditor.newDocName" placeholder="document_id"/>
+                    </div>
+                </div>
+                <div class="grid-block">
+                    <div class="grid-content">
+                        <a ng-click="::cbDocsEditor.createDocument(cbDocsEditor.docsTabs[cbDocsEditor.activeTab].bucket, cbDocsEditor.docsTabs[cbDocsEditor.activeTab].pageNumber, cbDocsEditor.newDocName, cbDocsEditor.activeTab)" class="success button expand">{{'ok' | translate}}</a>
+                    </div>
+                    <div class="grid-content">
+                        <a zf-close="" class="secondary button expand">{{'cancel' | translate}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div zf-modal="" id="saveAsModal" class="collapse">
+    <a zf-close="" class="close-button">×</a>
+    <div class="grid-block vertical">
+        <div class="title-bar primary">
+            <div class="center title">{{'createDocument' | translate}}</div>
+        </div>
+        <div class="vertical grid-block" style="padding-top: 1rem;">
+            <div class="grid-content padding" ng-show="cbDocsEditor.errorExistingDocument">
+                <p class="alertText">
+                    {{'documentAlreadyExists' | translate}}
+                </p>
+            </div>
+            <div class="vertical grid-block">
+                <div class="grid-block">
+                    <div class="grid-content shrink">
+                        <label for="newDocName" class="right inline">{{'typeDocumentId' | translate}}:</label>
+                    </div>
+                    <div class="grid-content">
+                        <input type="text" name="newDocName" ng-model="cbDocsEditor.newDocName" placeholder="document_id"/>
+                    </div>
+                </div>
+                <div class="grid-block">
+                    <div class="grid-content">
+                        <a ng-click="::cbDocsEditor.createDocument(cbDocsEditor.docsTabs[cbDocsEditor.activeTab].bucket, cbDocsEditor.docsTabs[cbDocsEditor.activeTab].pageNumber, cbDocsEditor.newDocName, cbDocsEditor.activeTab, cbDocsEditor.docsTabs[cbDocsEditor.activeTab].documentContent)" class="success button expand">{{'ok' | translate}}</a>
+                    </div>
+                    <div class="grid-content">
+                        <a zf-close="" class="secondary button expand">{{'cancel' | translate}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div zf-modal="" id="deleteDocModal" class="collapse">
+    <a zf-close="" class="close-button">×</a>
+    <div class="grid-block vertical">
+        <div class="title-bar primary">
+            <div class="center title">{{'deleteDocument' | translate}}</div>
+        </div>
+        <div class="vertical grid-block" style="padding-top: 1rem;">
+            <div class="grid-content padding">
+                <p class="alertText">
+                    {{'warning' | translate}} – {{'questionRemoveDocument' | translate}}
+                </p>
+            </div>
+            <div class="grid-block">
+                <div class="grid-content">
+                    <a ng-click="::cbDocsEditor.deleteDocument(cbDocsEditor.docsTabs[cbDocsEditor.activeTab].bucket, cbDocsEditor.docsTabs[cbDocsEditor.activeTab].pageNumber, cbDocsEditor.docsTabs[cbDocsEditor.activeTab].documentName, cbDocsEditor.activeTab)"
+                    class="alert button expand">{{'delete' | translate}}</a>
+                </div>
+                <div class="grid-content">
+                    <a zf-close="" class="secondary button expand">{{'cancel' | translate}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div zf-modal="" id="docNotSavedModal" class="collapse">
+    <a zf-close="" class="close-button">×</a>
+    <div class="grid-block vertical">
+        <div class="title-bar primary">
+            <div class="center title">{{'documentChangesNotSaved' | translate}}</div>
+        </div>
+        <div class="vertical grid-block" style="padding-top: 1rem;">
+            <div class="grid-content padding">
+                <p class="alertText">
+                    {{'warning' | translate}} – {{'questionChangeDocWithoutSave' | translate}}
+                </p>
+            </div>
+            <div class="grid-block">
+                <div class="grid-content">
+                    <a ng-click="::cbDocsEditor.saveAndChangeDoc(cbDocsEditor.docsTabs[cbDocsEditor.activeTab].bucket, cbDocsEditor.docsTabs[cbDocsEditor.activeTab].documentName, cbDocsEditor.docsTabs[cbDocsEditor.activeTab].documentRev, cbDocsEditor.docsTabs[cbDocsEditor.activeTab].documentContent, cbDocsEditor.activeTab, cbDocsEditor.documentKeyToChange)" class="success button expand">{{'saveAndChange' | translate}}</a>
+                </div>
+                <div class="grid-content">
+                    <a zf-close="" class="alert button expand" ng-click="::cbDocsEditor.changeDocWithoutSaving(cbDocsEditor.docsTabs[cbDocsEditor.activeTab].bucket, cbDocsEditor.activeTab, cbDocsEditor.documentKeyToChange)">{{'changeWithoutSaving' | translate}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html ng-app="app" ng-strict-di ng-controller="MainCtrl as app">
+    <head>
+        <title ng-bind="app.pageTitle"></title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width,user-scalable=no,minimal-ui" />
+
+        <!-- iOS NATIVE WEBAPP META TAGS -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon" sizes="128x128" href="assets/img/icon.png">
+        <link rel="apple-touch-icon-precomposed" sizes="128x128" href="assets/img/icon.png">
+
+        <!-- ANDROID NATIVE WEBAPP META TAGS -->
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="icon" sizes="128x128" href="assets/img/icon.png">
+        <link rel="icon" sizes="192x192" href="assets/img/highres-icon.png">
+
+        <!-- compiled CSS --><% styles.forEach( function ( file ) { %>
+        <link rel="stylesheet" type="text/css" href="<%= file %>" /><% }); %>
+
+        <!-- compiled JavaScript --><% scripts.forEach( function ( file ) {
+            if(file.indexOf('worker-json.js') < 0) { %>
+        <script type="text/javascript" src="<%= file %>"></script><% }}); %>
+
+        <base href="/couchbase-client/" />
+    </head>
+
+    <body ng-cloak>
+        <jmh-device-detect display-mode="app.displayMode"></jmh-device-detect>
+        <jmh-svg-loader></jmh-svg-loader>
+        <jmh-notify></jmh-notify>
+        <!-- CONTENT -->
+        <div class="vertical grid-frame">
+            <!-- NAVIGATION BAR -->
+            <div class="shrink collapse grid-content">
+                <nav class="global-nav">
+                    <div class="menu-group primary">
+                        <div class="menu-group-left">
+                            <ul class="condense icon-left menu-bar title-area">
+                                <li class="name">
+                                    <a href="">
+                                        <!--
+                                        <img class="logo" src="assets/img/logo.png">
+                                        -->
+                                        <strong>Couchbase Web Cient</strong>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--
+                        <div class="menu-group-right">
+                            <ul class="condense icon-left menu-bar title-area">
+                                <li>
+                                    <a href="#">Features</a>
+                                </li>
+                            </ul>
+                        </div>
+                        -->
+                    </div>
+                </nav>
+            </div>
+            <!-- HEADER -->
+            <!--
+            <header class="shrink collapse grid-content text-center">
+                <img ng-src="assets/img/header.png"/>
+            </header>
+            -->
+            <div id="container" class="grid-block">
+                <div id="view" class="grid-block" ui-view="main"></div>
+            </div>
+            <!-- FOOTER -->
+            <!--
+            <footer class="shrink collapse grid-content">
+                &copy;
+            </footer>
+            -->
+        </div>
+        <% if(containerConfig.devel) { %>
+            <script src="//localhost:35729/livereload.js"></script>
+        <% }; %>
+    </body>
+</html>

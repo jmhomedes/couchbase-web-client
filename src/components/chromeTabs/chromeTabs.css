@@ -1,0 +1,119 @@
+.chrome-tabs {
+    display: block;
+}
+
+.chrome-tabs .tabs {
+    height: 30px;
+    padding: 0;
+    overflow: visible;
+    display: inline-block;
+}
+
+.chrome-tabs .tab {
+    position: relative;
+    width: 200px;
+    height: 34px;
+    overflow: hidden;
+    float: left;
+    margin: 0 -1.4rem 0 0;
+    cursor: pointer;
+}
+
+.chrome-tabs .tab-title {
+    position: absolute;
+    z-index: 3;
+    line-height: 2.5rem;
+    padding-left: 1.5rem;
+    max-width: 165px;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 0.9rem;
+}
+
+.chrome-tabs .tab-box {
+    height: 50px;
+    background: #fff;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin: 0 10px 0;
+    box-shadow: 0 0 2px #fff inset;
+    -webkit-transform: perspective(100px) rotateX(30deg);
+    -moz-transform: perspective(100px) rotateX(30deg);
+    -ms-transform: perspective(100px) rotateX(30deg);
+    -o-transform: perspective(100px) rotateX(30deg);
+    transform: perspective(100px) rotateX(30deg);
+}
+
+.chrome-tabs .tab.active {
+    z-index: 20;
+    padding-bottom: 1px;
+    height: 34px;
+}
+
+.chrome-tabs .tab:not(.active) .tab-box {
+    background-color: #e5e5e5;
+    box-shadow: 0 0 2px 0 #fff inset;
+}
+
+.chrome-tabs .tab:not(.active):hover .tab-box {
+    background-color: #efefef;
+}
+
+.chrome-tabs .close-icon {
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #000;
+    display: inline-block;
+    padding: 0 4px;
+    position: absolute;
+    z-index: 4;
+    top: 0.8rem;
+    right: 1.2rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+}
+
+.chrome-tabs .close-icon:before {
+    content: "\d7";
+    font-size: 0.9rem;
+    box-sizing: border-box;
+}
+
+.chrome-tabs .close-icon:hover {
+    color: #fff;
+    background-color: #FF6B6B;
+    border-radius: 100%;
+    border-width: 5px;
+}
+
+.chrome-tabs .tabs .new-tab {
+    border: 1px solid #ccc;
+    color: #888;
+    margin: 0.75rem 1.2rem;
+    border-radius: 2px;
+    width: 1.8rem;
+    height: 1rem;
+    float: right;
+    cursor: pointer;
+    -moz-transform: skewX(28deg);
+    -o-transform: skewX(28deg);
+    -ms-transform: skewX(28deg);
+    -webkit-transform: skewX(28deg);
+    transform: skewX(28deg);
+}
+
+.chrome-tabs .new-tab:hover {
+    color: #444;
+    background-color: #eee;
+    border-color: #ccc;
+}
+
+.chrome-tabs .new-tab > span {
+    display: block;
+    text-align: center;
+    font-size: 0.9rem;
+    transform: skewX(-28deg);
+}

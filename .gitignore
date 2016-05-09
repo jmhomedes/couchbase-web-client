@@ -1,0 +1,9 @@
+**.idea
+**.iml
+git.properties
+**/node_modules/**
+**/build/**
+**/bin/**
+**/vendor/**
+**/reports/**
+deploy-keys.json

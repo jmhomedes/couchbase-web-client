@@ -1,0 +1,18 @@
+.loadingDiv {
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    background-image: url(../svg/gears.svg);
+    background-repeat: no-repeat;
+    background-size: 10%;
+    background-position: center;
+}
+@media only screen and (max-width: 40em){
+    .loadingDiv{
+        background-size: 15%;
+    }
+}
