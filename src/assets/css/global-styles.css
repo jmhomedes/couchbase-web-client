@@ -54,9 +54,14 @@ select.loading {
     border-color: #a80c20;
 }
 
-.global-nav .logo {
-    height: 1rem;
+.menu-bar.title-area > li > a {
+    padding: 0.5rem 1rem;
 }
+
+.global-nav .logo {
+    height: 2rem;
+}
+
 
 #view {
     padding-top: 1.2rem;
@@ -115,6 +120,7 @@ label.right {
 
 .document-list{
     overflow-y: auto;
+    overflow-x: hidden;
     margin-left: 0;
     margin-right: 0;
     margin-bottom: 0;
